@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-g
+CPPFLAGS=-g
 LDFLAGS=-lm
 OBJECTS=main.o graphics.o ball.o paddle.o brick.o
 
