@@ -14,5 +14,12 @@ brick.o: brick.cpp common.h
 cbreakout: $(OBJECTS) common.h
 	$(CC) $(CFLAGS) $(OBJECTS) -o cbreakout $(LDFLAGS)
 
+pack: cbreakout
+	@echo "   `ls -ahs cbreakout`"
+	strip cbreakout
+	@echo "   `ls -ahs cbreakout`"
+##	upx -qqq --best cbreakout
+##	@echo "   `ls -ahs cbreakout`"
+	
 clean:
 	rm -rf cbreakout $(OBJECTS)
