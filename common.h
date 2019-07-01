@@ -5,6 +5,9 @@
 
 class X {
  public:
+    const char *name;
+    int x,y; // center of the object
+    int w,h; // half width and half height - distances to the edges
     X(){
         this->setName("X");
         this->x = 0;
@@ -12,9 +15,6 @@ class X {
         this->w = 0;
         this->h = 0;
     }
-    const char *name;
-    int x,y; // center of the object
-    int w,h; // half width and half height - distances to the edges
     void setName(const char *s){ this->name=s; }
     void print(){
         printf("%10s: %3d, %3d | %3d, %3d \n", this->name, this->x, this->y, this->w, this->h);
@@ -60,6 +60,5 @@ class Paddle: public X{
         this->h = 6;
     }
 };
-
 
 #endif
