@@ -32,6 +32,8 @@ GLFWwindow *window_setup() {
    glfwSwapInterval(1);
    
    glfwSetKeyCallback(window, key_callback);
+   glEnable(GL_DEPTH_TEST);
+   
    return window;
 }
 
@@ -43,7 +45,7 @@ void window_loop(GLFWwindow *window) {
       ratio = width / (float) height;
       
       glViewport(0, 0, width, height);
-      glClear(GL_COLOR_BUFFER_BIT);
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       
       glMatrixMode(GL_PROJECTION);
       glLoadIdentity();
