@@ -1,15 +1,16 @@
 CC=g++
 CPPFLAGS += -g -Wall -I/usr/include/GL -I/usr/local/include
 LDLIBS += -lm -lglut -lGLU -lGL -lglfw
-OBJECTS=main.o graphics.o ball.o paddle.o brick.o
+OBJECTS=main.o graphics.o ball.o paddle.o brick.o game.o
 
 all: cbreakout
 
-main.o: main.cpp common.h
+main.o: main.cpp common.h game.h
 graphics.o: graphics.cpp common.h
 paddle.o: paddle.cpp common.h
 ball.o: ball.cpp common.h
 brick.o: brick.cpp common.h
+game.o: game.cpp common.h game.h
 
 cbreakout: $(OBJECTS) common.h
 	$(CC) $(CFLAGS) $(OBJECTS) $(LDLIBS) -o cbreakout
