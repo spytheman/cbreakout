@@ -40,12 +40,70 @@ void showTriangle2(){
    glEnd();
 }
 
+void showCube(){
+   
+   //Multi-colored side - FRONT
+   glBegin(GL_POLYGON);
+   glColor3f( 1.0, 0.0, 0.0 );     glVertex3f(  0.5, -0.5, -0.5 );      // P1 is red
+   glColor3f( 0.0, 1.0, 0.0 );     glVertex3f(  0.5,  0.5, -0.5 );      // P2 is green
+   glColor3f( 0.0, 0.0, 1.0 );     glVertex3f( -0.5,  0.5, -0.5 );      // P3 is blue
+   glColor3f( 1.0, 0.0, 1.0 );     glVertex3f( -0.5, -0.5, -0.5 );      // P4 is purple
+   glEnd();   
+   
+   
+   // White side - BACK
+   glBegin(GL_POLYGON);
+   glColor3f(   1.0,  1.0, 1.0 );
+   glVertex3f(  0.5, -0.5, 0.5 );
+   glVertex3f(  0.5,  0.5, 0.5 );
+   glVertex3f( -0.5,  0.5, 0.5 );
+   glVertex3f( -0.5, -0.5, 0.5 );
+   glEnd();
+     
+   // Purple side - RIGHT
+   glBegin(GL_POLYGON);
+   glColor3f(  1.0,  0.0,  1.0 );
+   glVertex3f( 0.5, -0.5, -0.5 );
+   glVertex3f( 0.5,  0.5, -0.5 );
+   glVertex3f( 0.5,  0.5,  0.5 );
+   glVertex3f( 0.5, -0.5,  0.5 );
+   glEnd();
+     
+   // Green side - LEFT
+   glBegin(GL_POLYGON);
+   glColor3f(   0.0,  1.0,  0.0 );
+   glVertex3f( -0.5, -0.5,  0.5 );
+   glVertex3f( -0.5,  0.5,  0.5 );
+   glVertex3f( -0.5,  0.5, -0.5 );
+   glVertex3f( -0.5, -0.5, -0.5 );
+   glEnd();
+     
+   // Blue side - TOP
+   glBegin(GL_POLYGON);
+   glColor3f(   0.0,  0.0,  1.0 );
+   glVertex3f(  0.5,  0.5,  0.5 );
+   glVertex3f(  0.5,  0.5, -0.5 );
+   glVertex3f( -0.5,  0.5, -0.5 );
+   glVertex3f( -0.5,  0.5,  0.5 );
+   glEnd();
+     
+   // Red side - BOTTOM
+   glBegin(GL_POLYGON);
+   glColor3f(   1.0,  0.0,  0.0 );
+   glVertex3f(  0.5, -0.5, -0.5 );
+   glVertex3f(  0.5, -0.5,  0.5 );
+   glVertex3f( -0.5, -0.5,  0.5 );
+   glVertex3f( -0.5, -0.5, -0.5 );
+   glEnd();   
+}
+
 void Game::render(){
    this->t = (float) glfwGetTime();
    this->frames++;
    if( this->frames % 60 == 0 ) printGameState(this);
-   glRotatef( this->t * -50.f, 0.f, 0.f, 1.f);    showTriangle1();
-   glRotatef( this->t * 120.f, 2.f, 1.f, 1.f);    showTriangle2();
+   glLoadIdentity(); glRotatef( this->t * -50.f, 0.f, 0.f, 1.f);    showTriangle1();
+   glLoadIdentity(); glRotatef( this->t * 120.f, 2.f, 1.f, 1.f);    showTriangle2();
+   glLoadIdentity(); glRotatef( this->t * 70.f, 0.5f, 0.5f, 1.f);   showCube();
 }
 
 void Game::onKey(int key, int scancode, int action, int mods){
