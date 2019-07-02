@@ -1,6 +1,6 @@
 CC=g++
 CPPFLAGS += -g -Wall -I/usr/include/GL -I/usr/local/include
-LDLIBS += -lGL -lglfw
+LDLIBS += -lglut -lGL -lglfw
 OBJECTS=main.o window.o game.o 
 
 all: cbreakout

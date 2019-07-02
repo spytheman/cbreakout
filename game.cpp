@@ -1,5 +1,6 @@
 #include "game.h"
 #include <GLFW/glfw3.h>
+#include <GL/glut.h>
 #include <unistd.h>
 #include <time.h>
 #include <stdlib.h>
@@ -107,6 +108,8 @@ void Game::render(){
    glLoadIdentity(); glTranslatef(  0.0,  0.0,    0.5*cos(this->t) ); glRotatef( this->t *  70.f, 0.5f, 0.5f, 1.f);   glScalef( 0.5, 0.5, 0.5 );  showCube();
    glLoadIdentity(); glTranslatef(  0.5,  0.5*cos(this->t),    0.5 ); glRotatef( this->t * -70.f, 0.5f, 0.5f, 1.f);   glScalef( 0.5, 0.5, 0.5 );  showCube();
    glLoadIdentity(); glTranslatef( -0.5 * sin(this->t), -0.5, -0.5 ); glRotatef( this->t * 150.f, 0.5f, 0.5f, 1.f);   glScalef( 0.5, 0.5, 0.5 );  showCube();
+   
+   glLoadIdentity(); glTranslatef( -0.5 * sin(this->t), -0.5, -0.5 ); glRotatef( this->t * 25.f, 0.5f, 0.5f, 1.f);   glScalef( 0.5, 0.5, 0.5 );  glutWireTeapot(1.0);
 }
 
 void Game::onKey(int key, int scancode, int action, int mods){
