@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <stdlib.h>
+#include <math.h>
 
 Game game;
 
@@ -103,7 +104,9 @@ void Game::render(){
    if( this->frames % 60 == 0 ) printGameState(this);
    glLoadIdentity(); glRotatef( this->t * -50.f, 0.f, 0.f, 1.f);    showTriangle1();
    glLoadIdentity(); glRotatef( this->t * 120.f, 2.f, 1.f, 1.f);    showTriangle2();
-   glLoadIdentity(); glRotatef( this->t * 70.f, 0.5f, 0.5f, 1.f);   showCube();
+   glLoadIdentity(); glTranslatef(  0.0,  0.0,    0.5*cos(this->t) ); glRotatef( this->t *  70.f, 0.5f, 0.5f, 1.f);   glScalef( 0.5, 0.5, 0.5 );  showCube();
+   glLoadIdentity(); glTranslatef(  0.5,  0.5*cos(this->t),    0.5 ); glRotatef( this->t * -70.f, 0.5f, 0.5f, 1.f);   glScalef( 0.5, 0.5, 0.5 );  showCube();
+   glLoadIdentity(); glTranslatef( -0.5 * sin(this->t), -0.5, -0.5 ); glRotatef( this->t * 150.f, 0.5f, 0.5f, 1.f);   glScalef( 0.5, 0.5, 0.5 );  showCube();
 }
 
 void Game::onKey(int key, int scancode, int action, int mods){

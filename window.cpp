@@ -55,6 +55,7 @@ void window_loop(GLFWwindow *window) {
       glLoadIdentity();
       game.render();
       
+      glFlush();
       glfwSwapBuffers(window);
       glfwPollEvents();      
    }
