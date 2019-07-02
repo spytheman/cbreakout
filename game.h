@@ -6,6 +6,7 @@
 class Game {
  public:
    int frames;
+   float t;
    Ball *ball;
    Paddle *paddle;
    Brick bricks[60];
