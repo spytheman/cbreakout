@@ -17,7 +17,7 @@ class X {
     }
     void setName(const char *s){ this->name=s; }
     void print(){
-        printf("%10s: %3d, %3d | %3d, %3d ", this->name, this->x, this->y, this->w, this->h);
+        printf("%6s: xy %3d, %3d ; wh %3d, %3d |", this->name, this->x, this->y, this->w, this->h);
     }
 };
 
