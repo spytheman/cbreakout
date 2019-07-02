@@ -50,6 +50,7 @@ void window_loop(GLFWwindow *window) {
       glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
       glMatrixMode(GL_MODELVIEW);
 
+      glLoadIdentity();
       game.render();
       
       glfwSwapBuffers(window);
