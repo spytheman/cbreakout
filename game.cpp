@@ -6,11 +6,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-
-Game::Game(){
-   this->init(); 
-}
-
 void Game::init(){
    srand(time(NULL));
    this->ball = new Ball(50,50,10);

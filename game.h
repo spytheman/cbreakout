@@ -10,7 +10,6 @@ class Game {
    Ball *ball;
    Paddle *paddle;
    Brick bricks[60];
-   Game();
    void init();
    void render();
    void onKey(int key, int scancode, int action, int mods);   

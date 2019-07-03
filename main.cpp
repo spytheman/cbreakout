@@ -8,7 +8,8 @@
 Game game;
 
 int main(int argc, char **argv){
-   glutInit(&argc,argv);
+   game.init();
+   glutInit(&argc,argv);   
    GLFWwindow* window = window_setup();
    window_loop( window );
    window_cleanup( window );
