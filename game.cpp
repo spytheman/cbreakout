@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-Game game;
 
 Game::Game(){
    this->init(); 

@@ -5,7 +5,7 @@ OBJECTS=main.o window.o game.o
 
 all: cbreakout
 
-main.o: main.cpp common.h window.h
+main.o: main.cpp common.h window.h game.h
 window.o: window.cpp window.h common.h game.h 
 game.o: game.cpp common.h game.h
 
