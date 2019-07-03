@@ -1,5 +1,5 @@
-#ifndef __CBREAKOUT_GRAPHICS_H
-#define __CBREAKOUT_GRAPHICS_H
+#ifndef __CBREAKOUT_WINDOW_H
+#define __CBREAKOUT_WINDOW_H
 
 #include <GLFW/glfw3.h>
 
