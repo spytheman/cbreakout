@@ -5,17 +5,21 @@
 
 class X {
  public:
-    const char *name;
     int x,y; // center of the object
     int w,h; // half width and half height - distances to the edges
+    int dx;
+    int dy;
+    char *name;
     X(){
-        this->setName("X");
+        this->setName((char*)"X");
         this->x = 0;
         this->y = 0;
         this->w = 0;
         this->h = 0;
+        this->dx = 0;
+        this->dy = 0;
     }
-    void setName(const char *s){ this->name=s; }
+    void setName(char *s){ this->name=s; }
     void print(){
         printf("%6s: xy %3d, %3d ; wh %3d, %3d |", this->name, this->x, this->y, this->w, this->h);
     }
@@ -24,14 +28,14 @@ class X {
 class Brick: public X { 
  public: 
     Brick(){
-        this->setName( "Brick" );
+        this->setName( (char*)"Brick" );
         this->x = 0;
         this->y = 0;
         this->w = 40;
         this->h = 10;
     }
     Brick(int x, int y){
-        this->setName( "Brick" );
+        this->setName( (char*)"Brick" );
         this->x = x;
         this->y = y;
         this->w = 40;
@@ -42,18 +46,20 @@ class Brick: public X {
 class Ball: public X{
  public:
     Ball(int x, int y, int r){
-        this->setName( "Ball" );
+        this->setName( (char*)"Ball" );
         this->x = x;
         this->y = y;
         this->w = r;
         this->h = r;
-    }
+        this->dx =  1;
+        this->dy = -1;
+    }    
 };
 
 class Paddle: public X{
  public:
     Paddle(int x, int y){ 
-        this->setName( "Paddle" );
+        this->setName( (char*)"Paddle" );
         this->x = x;
         this->y = y;
         this->w = 40;

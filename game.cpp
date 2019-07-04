@@ -138,8 +138,18 @@ void showBackground(Game *g){
 
 void game_update(Game *g){
     //printf("game_update y: %d g:%p\n", g->ball->y, (void*)g);
-    g->ball->y -= 1;
-    ICLAMP( g->ball->y, -120, 120 );
+    {
+        g->ball->x += g->ball->dx;
+        g->ball->y += g->ball->dy;
+        ICLAMP( g->ball->x, -120, 120 );
+        ICLAMP( g->ball->y, -120, 120 );
+    }
+    {
+        g->paddle->x += g->paddle->dx;
+        g->paddle->y += g->paddle->dy;
+        ICLAMP( g->paddle->x, -120, 120 );
+        ICLAMP( g->paddle->y, -120, 120 );
+    }
 }
 void game_render(Game *g){
    g->t = (float) glfwGetTime();
@@ -147,7 +157,7 @@ void game_render(Game *g){
    ///////////////////////////////////////////////////////
    if( g->frames % 60 == 0 ) game_printstate(g);
    game_update(g);
-   showBackground(g);
+   //   showBackground(g);
    showPaddle(g);
    showBall(g);
    showBricks(g);   
@@ -155,10 +165,11 @@ void game_render(Game *g){
 
 void game_onkey(Game *g, int key, int scancode, int action, int mods){
    printf("game_onkey game: %p | key:%d scancode:%d action:%d mods:%d\n", (void*)g, key, scancode, action, mods);
+
    if( key == GLFW_KEY_R )  game_init(g);
-   if( key == GLFW_KEY_RIGHT ) g->paddle->x+=3;
-   if( key == GLFW_KEY_LEFT )  g->paddle->x-=3;
-   ICLAMP( g->paddle->x, -100, 100 );
-   ICLAMP( g->paddle->y, -100, 100 );
+
+   if( key == GLFW_KEY_RIGHT ) g->paddle->dx =  3;
+   if( key == GLFW_KEY_LEFT )  g->paddle->dx = -3;
+   if( key == GLFW_KEY_UP )  g->paddle->dx = 0;
 }
 
