@@ -23,82 +23,7 @@ void game_printstate(Game *g){
    printf("\n");
 }
 
-void showTriangle1(){
-   glBegin(GL_TRIANGLES);
-   glColor3f(1.f, 0.f, 0.f);    glVertex3f(-0.8f, -0.6f, 0.f);
-   glColor3f(0.f, 1.f, 0.f);    glVertex3f( 0.8f, -0.6f, 0.f);
-   glColor3f(0.f, 0.f, 1.f);    glVertex3f( 0.f,   0.8f, 0.f);
-   glEnd();
-}
-
-void showTriangle2(){
-   glBegin(GL_TRIANGLES);
-   glColor3f(0.5f, 0.f,  0.f);    glVertex3f(-0.5f, -0.4f, 0.3f);
-   glColor3f(0.f,  0.5f, 0.f);    glVertex3f( 0.5f, -0.4f, 0.3f);
-   glColor3f(0.f,  0.f,  0.5f);   glVertex3f( 0.f,   0.5f, 0.3f);
-   glEnd();
-}
-
-void showCube(){
-   //Multi-colored side - FRONT
-   glBegin(GL_POLYGON);
-   glColor3f( 1.0, 0.0, 0.0 );     glVertex3f(  0.5, -0.5, -0.5 );      // P1 is red
-   glColor3f( 0.0, 1.0, 0.0 );     glVertex3f(  0.5,  0.5, -0.5 );      // P2 is green
-   glColor3f( 0.0, 0.0, 1.0 );     glVertex3f( -0.5,  0.5, -0.5 );      // P3 is blue
-   glColor3f( 1.0, 0.0, 1.0 );     glVertex3f( -0.5, -0.5, -0.5 );      // P4 is purple
-   glEnd();   
-   
-   
-   // White side - BACK
-   glBegin(GL_POLYGON);
-   glColor3f(   1.0,  1.0, 1.0 );
-   glVertex3f(  0.5, -0.5, 0.5 );
-   glVertex3f(  0.5,  0.5, 0.5 );
-   glVertex3f( -0.5,  0.5, 0.5 );
-   glVertex3f( -0.5, -0.5, 0.5 );
-   glEnd();
-     
-   // Purple side - RIGHT
-   glBegin(GL_POLYGON);
-   glColor3f(  1.0,  0.0,  1.0 );
-   glVertex3f( 0.5, -0.5, -0.5 );
-   glVertex3f( 0.5,  0.5, -0.5 );
-   glVertex3f( 0.5,  0.5,  0.5 );
-   glVertex3f( 0.5, -0.5,  0.5 );
-   glEnd();
-     
-   // Green side - LEFT
-   glBegin(GL_POLYGON);
-   glColor3f(   0.0,  1.0,  0.0 );
-   glVertex3f( -0.5, -0.5,  0.5 );
-   glVertex3f( -0.5,  0.5,  0.5 );
-   glVertex3f( -0.5,  0.5, -0.5 );
-   glVertex3f( -0.5, -0.5, -0.5 );
-   glEnd();
-     
-   // Blue side - TOP
-   glBegin(GL_POLYGON);
-   glColor3f(   0.0,  0.0,  1.0 );
-   glVertex3f(  0.5,  0.5,  0.5 );
-   glVertex3f(  0.5,  0.5, -0.5 );
-   glVertex3f( -0.5,  0.5, -0.5 );
-   glVertex3f( -0.5,  0.5,  0.5 );
-   glEnd();
-     
-   // Red side - BOTTOM
-   glBegin(GL_POLYGON);
-   glColor3f(   1.0,  0.0,  0.0 );
-   glVertex3f(  0.5, -0.5, -0.5 );
-   glVertex3f(  0.5, -0.5,  0.5 );
-   glVertex3f( -0.5, -0.5,  0.5 );
-   glVertex3f( -0.5, -0.5, -0.5 );
-   glEnd();   
-}
-
 void showPaddle(Game *g){
-   //glLoadIdentity(); glTranslatef( -0.5 * sin(this->t), -0.5, -0.5 ); glRotatef( this->t * 25.f, 0.5f, 0.5f, 1.f);   glScalef( 0.5, 0.5, 0.5 );  glutWireTeapot(1.0);
-    //    g->paddle->x = -100;
-    g->paddle->y = -100;
    glLoadIdentity();
    glTranslatef( g->paddle->x / 112.0, 0.11 + g->paddle->y / 100.0, 0.0);
    glRotatef( 3.14f, 1.f, 1.f, 0.0f);
@@ -106,8 +31,8 @@ void showPaddle(Game *g){
    glColor3f(0.5, 0.0, 0.0 );
    glutWireCube(1.0);
 }
+
 void showBall(Game *g){
-   //glLoadIdentity(); glTranslatef( -0.5 * sin(this->t), -0.5, -0.5 ); glRotatef( this->t * 25.f, 0.5f, 0.5f, 1.f);   glScalef( 0.5, 0.5, 0.5 );  glutWireTeapot(1.0);
    glLoadIdentity();
    glTranslatef( g->ball->x / 112.0, 0.11 + g->ball->y / 100.0, 0);
    glRotatef( 15.14f * g->t, 1.f, 1.f, 0.0f);
@@ -115,8 +40,8 @@ void showBall(Game *g){
    glColor3f(0.5, 0.5, 0.0 );
    glutWireSphere(1.0, 15, 15);
 }
+
 void showBricks(Game *g){
-   //glLoadIdentity(); glTranslatef( -0.5 * sin(this->t), -0.5, -0.5 ); glRotatef( this->t * 25.f, 0.5f, 0.5f, 1.f);   glScalef( 0.5, 0.5, 0.5 );  glutWireTeapot(1.0);
    glLoadIdentity();
    glTranslatef( 0.0, 0.0, 0.0);
    glRotatef( 2.f, 0.f, 0.f, 1.5f);
@@ -125,15 +50,9 @@ void showBricks(Game *g){
    glColor3f(0.5, 0.5, 0.5 );
    glutWireCube(1.0);
 }
+
 void showBackground(Game *g){
-    //   return;
-   glLoadIdentity(); glRotatef( g->t * -50.f, 0.f, 0.f, 1.f);    showTriangle1();
-   glLoadIdentity(); glRotatef( g->t * 120.f, 2.f, 1.f, 1.f);    showTriangle2();
-   glLoadIdentity(); glTranslatef(  0.0,  0.0,    0.5*cos(g->t) ); glRotatef( g->t *  70.f, 0.5f, 0.5f, 1.f);   glScalef( 0.5, 0.5, 0.5 );  showCube();
-   glLoadIdentity(); glTranslatef(  0.5,  0.5*cos(g->t),    0.5 ); glRotatef( g->t * -70.f, 0.5f, 0.5f, 1.f);   glScalef( 0.5, 0.5, 0.5 );  showCube();
-   glLoadIdentity(); glTranslatef( -0.5 * sin(g->t), -0.5, -0.5 ); glRotatef( g->t * 150.f, 0.5f, 0.5f, 1.f);   glScalef( 0.5, 0.5, 0.5 );  showCube();   
-   glColor3f(0.25, 0.25, 0.55 );
-   glLoadIdentity(); glTranslatef( -0.5 * sin(g->t), -0.5, -0.5 ); glRotatef( g->t * 25.f, 0.5f, 0.5f, 1.f);   glScalef( 0.5, 0.5, 0.5 );  glutWireTeapot(1.0);
+    //TODO
 }
 
 void game_update(Game *g){
@@ -151,13 +70,14 @@ void game_update(Game *g){
         ICLAMP( g->paddle->y, -120, 120 );
     }
 }
+
 void game_render(Game *g){
    g->t = (float) glfwGetTime();
    g->frames++;
    ///////////////////////////////////////////////////////
-   if( g->frames % 60 == 0 ) game_printstate(g);
    game_update(g);
-   //   showBackground(g);
+   if( g->frames % 60 == 0 ) game_printstate(g);
+   showBackground(g);
    showPaddle(g);
    showBall(g);
    showBricks(g);   
