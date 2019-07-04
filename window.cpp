@@ -4,6 +4,7 @@
 #include "common.h"
 #include "game.h"
 #include "window.h"
+#include "reloader.h"
 
 static void error_callback(int error, const char* description) {
    printf("error_callback error: %d\n", error);
@@ -13,6 +14,14 @@ static void error_callback(int error, const char* description) {
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS){
       glfwSetWindowShouldClose(window, GL_TRUE);
+      return;
+   }
+   if (key == GLFW_KEY_TAB ){
+      if( action == GLFW_PRESS){
+         printf("TAB pressed!\n");
+         libgame_reload();
+      }
+      return;
    }
    game.onKey(key, scancode, action, mods);
 }

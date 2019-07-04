@@ -13,7 +13,7 @@ void Game::init(){
 }
 
 void printGameState(Game *g){
-   printf("frames: %5d t:%8.3f |", g->frames, g->t);
+   printf("zxxx frames: %5d t:%8.3f |", g->frames, g->t);
    g->ball->print();
    g->paddle->print();
    g->bricks[0].print();
