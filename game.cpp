@@ -6,13 +6,13 @@
 #include <stdlib.h>
 #include <math.h>
 
-void Game::init(){
+void game_init(Game *g){
    srand(time(NULL));
-   this->ball = new Ball(50,50,10);
-   this->paddle = new Paddle(400, 600);         
+   g->ball = new Ball(50,50,10);
+   g->paddle = new Paddle(400, 600);         
 }
 
-void printGameState(Game *g){
+void game_printstate(Game *g){
    printf("zxxx frames: %5d t:%8.3f |", g->frames, g->t);
    g->ball->print();
    g->paddle->print();
@@ -124,17 +124,17 @@ void showBackground(Game *g){
    glLoadIdentity(); glTranslatef( -0.5 * sin(g->t), -0.5, -0.5 ); glRotatef( g->t * 150.f, 0.5f, 0.5f, 1.f);   glScalef( 0.5, 0.5, 0.5 );  showCube();   
    glLoadIdentity(); glTranslatef( -0.5 * sin(g->t), -0.5, -0.5 ); glRotatef( g->t * 25.f, 0.5f, 0.5f, 1.f);   glScalef( 0.5, 0.5, 0.5 );  glutWireTeapot(1.0);
 }
-void Game::render(){
-   this->t = (float) glfwGetTime();
-   this->frames++;
+void game_render(Game *g){
+   g->t = (float) glfwGetTime();
+   g->frames++;
    ///////////////////////////////////////////////////////
-   if( this->frames % 60 == 0 ) printGameState(this);
-   showBackground(this);
-   showPaddle(this);
-   showBall(this);
-   showBricks(this);   
+   if( g->frames % 60 == 0 ) game_printstate(g);
+   showBackground(g);
+   showPaddle(g);
+   showBall(g);
+   showBricks(g);   
 }
 
-void Game::onKey(int key, int scancode, int action, int mods){
-   printf("Game::onKey key:%d scancode:%d action:%d mods:%d\n", key, scancode, action, mods);
+void game_onkey(Game *g, int key, int scancode, int action, int mods){
+   printf("game_onkey game: %p | key:%d scancode:%d action:%d mods:%d\n", g, key, scancode, action, mods);
 }

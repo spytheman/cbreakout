@@ -2,8 +2,8 @@
 #include <stdio.h>
 
 #include "common.h"
-#include "game.h"
 #include "window.h"
+#include "game.h"
 #include "reloader.h"
 
 static void error_callback(int error, const char* description) {
@@ -23,7 +23,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
       }
       return;
    }
-   game.onKey(key, scancode, action, mods);
+   if( game.ponkey ) game.ponkey( &game, key, scancode, action, mods );
 }
 
 GLFWwindow *window_setup() {
@@ -63,7 +63,7 @@ void window_loop(GLFWwindow *window) {
       glMatrixMode(GL_MODELVIEW);
 
       glLoadIdentity();
-      game.render();
+      if( game.prender ) game.prender(&game);
       
       glFlush();
       glfwSwapBuffers(window);

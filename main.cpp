@@ -9,10 +9,9 @@
 Game game;
 
 int main(int argc, char **argv){
-   game.init();
+   libgame_reload();
+   if( game.pinit ) game.pinit( &game );
    
-   libgame_load();
-
    glutInit(&argc,argv);   
    GLFWwindow* window = window_setup();
    window_loop( window );
