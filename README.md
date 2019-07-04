@@ -23,9 +23,9 @@ Building:
 
 Editing / live reloading / hot swapping game code:
 =======================================================
-	1) start ./cbreakout in a terminal
-  2) edit game.cpp, save your changes
-  3) run 'make refresh', or just 'make'
+1) start ./cbreakout in a terminal
+2) edit game.cpp, save your changes
+3) run 'make refresh', or just 'make'
   
 ==>The game will load the new libgame.so produced by make.
 
