@@ -31,3 +31,6 @@ clean:
 
 release:
 	CPPFLAGS=-O2  make clean all
+
+stats:
+	wc *.cpp *.h |sort -n

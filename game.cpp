@@ -35,7 +35,7 @@ void showPaddle(Game *g){
 void showBall(Game *g){
    glLoadIdentity();
    glTranslatef( g->ball->x / 112.0, 0.11 + g->ball->y / 100.0, 0);
-   glRotatef( 15.14f * g->t, 1.f, 1.f, 0.0f);
+   glRotatef( 235.14f * g->t, 5.5f, 5.f, 8.0f);
    glScalef( 0.2, 0.2, 0.2 );
    glColor3f(0.5, 0.5, 0.0 );
    glutWireSphere(1.0, 15, 15);
@@ -60,8 +60,12 @@ void game_update(Game *g){
     {
         g->ball->x += g->ball->dx;
         g->ball->y += g->ball->dy;
-        ICLAMP( g->ball->x, -120, 120 );
-        ICLAMP( g->ball->y, -120, 120 );
+        if( g->ball->dy < 0 && g->ball->y < -90 ) g->ball->dy *= -1;
+        if( g->ball->dy > 0 && g->ball->y >  72 ) g->ball->dy *= -1;
+        if( g->ball->dx < 0 && g->ball->x < -128 ) g->ball->dx *= -1;
+        if( g->ball->dx > 0 && g->ball->x >  128 ) g->ball->dx *= -1;
+        ICLAMP( g->ball->x, -130, 130 );
+        ICLAMP( g->ball->y, -90, 72 );
     }
     {
         g->paddle->x += g->paddle->dx;
