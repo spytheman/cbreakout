@@ -19,13 +19,13 @@ void libgame_load(){
    char nlibfilename[256];
    char cmd_copy[1024];
    char cmd_rm[1024];
-   char cmd_make[1024];
+   //char cmd_make[1024];
    sprintf(nlibfilename, "%s.%d.%d.so", olibfilename, rand() % 1000000000, rand() % 1000000000);
-   sprintf(cmd_make, "make libgame.so");
+   //sprintf(cmd_make, "make libgame.so");
    sprintf(cmd_copy, "cp -a %s %s", olibfilename, nlibfilename);
    sprintf(cmd_rm,   "rm -rf %s", nlibfilename);
    ////////////////////////////////////////////////////////////////////// 
-   cmdrun( cmd_make );
+   //cmdrun( cmd_make );
    cmdrun( cmd_copy );
    printf("dlopening %s...\n", nlibfilename);
    _libgame = dlopen( nlibfilename , RTLD_NOW );

@@ -4,7 +4,8 @@ LDLIBS += -lglut -lGL -lglfw -ldl
 OBJECTS=main.o window.o reloader.o
 
 refresh: libgame.so
-	@echo "Now refresh by pressing TAB in the game!"
+	pkill -SIGUSR1 cbreakout || true
+	@echo "The game should be refreshed :-)"
 
 all: cbreakout libgame.so
 
