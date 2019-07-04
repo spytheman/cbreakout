@@ -9,7 +9,7 @@
 Game game;
 
 int main(int argc, char **argv){
-   libgame_reload();
+   libgame_load();
    if( game.pinit ) game.pinit( &game );
    
    glutInit(&argc,argv);   

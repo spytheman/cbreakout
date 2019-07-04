@@ -1,5 +1,5 @@
 CC=g++
-CPPFLAGS += -g -Wall -I/usr/include/GL -I/usr/local/include
+CPPFLAGS += -pedantic -g -Wall -I/usr/include/GL -I/usr/local/include
 LDLIBS += -lglut -lGL -lglfw -ldl
 OBJECTS=main.o window.o reloader.o
 
@@ -13,9 +13,9 @@ window.o: window.cpp window.h common.h game.h
 game.o: game.cpp common.h game.h
 reloader.o: reloader.cpp reloader.h
 libgame.so: game.cpp common.h game.h
-	$(CC) $(CPPFLAGS) -shared -o libgame.so -fPIC game.cpp
+	$(CC) $(CPPFLAGS) -shared  -rdynamic -o libgame.so -fPIC game.cpp
 
-cbreakout: $(OBJECTS) common.h
+cbreakout: $(OBJECTS) common.h libgame.so
 	$(CC) $(CPPFLAGS) $(OBJECTS) $(LDLIBS) -o cbreakout
 
 pack: cbreakout

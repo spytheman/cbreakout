@@ -136,5 +136,5 @@ void game_render(Game *g){
 }
 
 void game_onkey(Game *g, int key, int scancode, int action, int mods){
-   printf("game_onkey game: %p | key:%d scancode:%d action:%d mods:%d\n", g, key, scancode, action, mods);
+   printf("game_onkey game: %p | key:%d scancode:%d action:%d mods:%d\n", (void*)g, key, scancode, action, mods);
 }
