@@ -45,3 +45,6 @@ release:
 
 stats:
 	wc *.cpp *.h |sort -n
+
+callgrind: cbreakout
+	valgrind --tool=callgrind ./cbreakout
