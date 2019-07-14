@@ -10,8 +10,7 @@ Game game;
 
 int main(int argc, char **argv){
    libgame_load();
-   GameHandlers * gamehandlers = reinterpret_cast<GameHandlers *>( game.handlers );
-   if( gamehandlers ) gamehandlers->pinit( &game );
+   reinterpret_cast<GameHandlers *>( game.handlers )->pinit( &game );
    reloader_init();
    
    glutInit(&argc,argv);   
