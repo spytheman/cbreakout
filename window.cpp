@@ -23,7 +23,9 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
       }
       return;
    }
-   if( game.ponkey ) game.ponkey( &game, key, scancode, action, mods );
+   
+   GameHandlers * gamehandlers = reinterpret_cast<GameHandlers *>( game.handlers );
+   if( gamehandlers ) gamehandlers->ponkey( &game, key, scancode, action, mods );
 }
 
 GLFWwindow *window_setup() {
@@ -63,7 +65,9 @@ void window_loop(GLFWwindow *window) {
       glMatrixMode(GL_MODELVIEW);
 
       glLoadIdentity();
-      if( game.prender ) game.prender(&game);
+      
+      GameHandlers * gamehandlers = reinterpret_cast<GameHandlers *>( game.handlers );
+      if( gamehandlers ) gamehandlers->prender(&game);
       
       glFlush();
       glfwSwapBuffers(window);

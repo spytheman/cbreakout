@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <time.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include <math.h>
 
 #define ICLAMP(x, xmin, xmax )  x = ( x < xmin ) ? xmin : ( ( x > xmax ) ? xmax :  x )
@@ -11,11 +13,13 @@
 void game_init(Game *g){
    srand(time(NULL));
    g->ball = new Ball(-40, 100, 1);
-   g->paddle = new Paddle(0, -100);         
+   g->paddle = new Paddle(0, -100);
+   g->bricks = new Brick[60];
+   //atomic_store( &g->handlers, 0 );
 }
 
 void game_printstate(Game *g){
-   printf("Frames: %5d t:%8.3f | g: %p", g->frames, g->t, (void *)g);
+   printf("zFrames: %5d t:%8.3f | g: %p", g->frames, g->t, (void *)g);
    g->ball->print();
    g->paddle->print();
    g->bricks[0].print();
@@ -28,7 +32,7 @@ void showPaddle(Game *g){
    glTranslatef( g->paddle->x / 112.0, 0.11 + g->paddle->y / 100.0, 0.0);
    glRotatef( 3.14f, 1.f, 1.f, 0.0f);
    glScalef( 0.8, 0.15, 1.0 );
-   glColor3f(0.5, 0.0, 0.0 );
+   glColor3f(0.5, 0.0, 0.1 );
    glutWireCube(1.0);
 }
 
@@ -37,7 +41,7 @@ void showBall(Game *g){
    glTranslatef( g->ball->x / 112.0, 0.11 + g->ball->y / 100.0, 0);
    glRotatef( 235.14f * g->t, 5.5f, 5.f, 8.0f);
    glScalef( 0.2, 0.2, 0.2 );
-   glColor3f(0.5, 0.5, 0.0 );
+   glColor3f(0.1, 0.2, 0.9 );
    glutWireSphere(1.0, 15, 15);
 }
 
@@ -53,6 +57,9 @@ void showBricks(Game *g){
 
 void showBackground(Game *g){
     //TODO
+    if(0){
+        printf("g: %p\n", (void*)g);
+    }
 }
 
 void game_update(Game *g){
@@ -95,5 +102,58 @@ void game_onkey(Game *g, int key, int scancode, int action, int mods){
    if( key == GLFW_KEY_RIGHT ) g->paddle->dx =  3;
    if( key == GLFW_KEY_LEFT )  g->paddle->dx = -3;
    if( key == GLFW_KEY_UP )  g->paddle->dx = 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+X::X(){
+    this->setName(strdup("X"));
+    this->x = 0;
+    this->y = 0;
+    this->w = 0;
+    this->h = 0;
+    this->dx = 0;
+    this->dy = 0;
+}
+
+void X::setName(char *s){
+    this->name=s;
+}
+
+void X::print(){
+    printf("%6s: xy %3d, %3d ; wh %3d, %3d |", this->name, this->x, this->y, this->w, this->h);
+}
+
+Brick::Brick(){
+    this->setName( strdup("Brick") );
+    this->x = 0;
+    this->y = 0;
+    this->w = 40;
+    this->h = 10;
+}
+
+Brick::Brick(int x, int y){
+    this->setName( strdup("Brick") );
+    this->x = x;
+    this->y = y;
+    this->w = 40;
+    this->h = 10;
+}
+
+Ball::Ball(int x, int y, int r){
+    this->setName( strdup("Ball") );
+    this->x = x;
+    this->y = y;
+    this->w = r;
+    this->h = r;
+    this->dx =  1;
+    this->dy = -1;
+}
+Paddle::Paddle(int x, int y){ 
+    this->setName( strdup("Paddle") );
+    this->x = x;
+    this->y = y;
+    this->w = 40;
+    this->h = 6;
 }
 

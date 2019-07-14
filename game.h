@@ -2,11 +2,18 @@
 #define __CBREAKOUT_GAME_H
 
 #include "common.h"
+#include <stdatomic.h>
 
 struct Game;
 typedef void (*T_GAME_INIT)(Game *);
 typedef void (*T_GAME_RENDER)(Game *);
 typedef void (*T_GAME_ON_KEY)(Game *, int, int, int, int);
+
+struct GameHandlers {
+   T_GAME_INIT   pinit = NULL;
+   T_GAME_ON_KEY ponkey = NULL;
+   T_GAME_RENDER prender = NULL;
+};
 
 struct Game {
  public:
@@ -14,11 +21,8 @@ struct Game {
    float t;
    Ball *ball;
    Paddle *paddle;
-   Brick bricks[60];
-   ///////////////////////////////
-   T_GAME_INIT   pinit = NULL;
-   T_GAME_ON_KEY ponkey = NULL;
-   T_GAME_RENDER prender = NULL;
+   Brick *bricks;
+   atomic_intptr_t handlers = ATOMIC_VAR_INIT(0);
 };
 
 extern Game game;

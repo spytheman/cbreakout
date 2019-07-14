@@ -1,6 +1,15 @@
-CC=g++
-CPPFLAGS += -pedantic -g -Wall -I/usr/include/GL -I/usr/local/include
-LDLIBS += -lglut -lGL -lglfw -ldl
+
+CC=clang-7
+CXX=clang++-7
+
+CPPFLAGS += -O1 -pedantic -g -Wall -Wextra -Werror \
+     -I/usr/include/GL \
+     -I/usr/local/include \
+     -fPIE -fPIC
+
+CPPFLAGS += -fsanitize=thread -fsanitize=undefined -fsanitize=vptr
+
+LDLIBS += -lpthread -lstdc++ -lubsan -lglut -lGL -lglfw -ldl -pie 
 OBJECTS=main.o window.o reloader.o
 
 refresh: libgame.so
@@ -14,7 +23,7 @@ window.o: window.cpp window.h common.h game.h
 game.o: game.cpp common.h game.h
 reloader.o: reloader.cpp reloader.h
 libgame.so: game.cpp common.h game.h
-	$(CC) $(CPPFLAGS) -shared  -rdynamic -o libgame.so -fPIC game.cpp
+	$(CC) $(CPPFLAGS) -shared  -rdynamic -o libgame.so game.cpp
 
 cbreakout: $(OBJECTS) common.h libgame.so
 	$(CC) $(CPPFLAGS) $(OBJECTS) $(LDLIBS) -o cbreakout

@@ -1,8 +1,6 @@
 #ifndef __CBREAKOUT_COMMON_H
 #define __CBREAKOUT_COMMON_H
 
-#include <stdio.h>
-
 class X {
  public:
     int x,y; // center of the object
@@ -10,61 +8,25 @@ class X {
     int dx;
     int dy;
     char *name;
-    X(){
-        this->setName((char*)"X");
-        this->x = 0;
-        this->y = 0;
-        this->w = 0;
-        this->h = 0;
-        this->dx = 0;
-        this->dy = 0;
-    }
-    void setName(char *s){ this->name=s; }
-    void print(){
-        printf("%6s: xy %3d, %3d ; wh %3d, %3d |", this->name, this->x, this->y, this->w, this->h);
-    }
+    X();
+    void setName(char *s);
+    void print();
 };
 
 class Brick: public X { 
  public: 
-    Brick(){
-        this->setName( (char*)"Brick" );
-        this->x = 0;
-        this->y = 0;
-        this->w = 40;
-        this->h = 10;
-    }
-    Brick(int x, int y){
-        this->setName( (char*)"Brick" );
-        this->x = x;
-        this->y = y;
-        this->w = 40;
-        this->h = 10;
-    }
+    Brick();
+    Brick(int x, int y);
 };
 
 class Ball: public X{
  public:
-    Ball(int x, int y, int r){
-        this->setName( (char*)"Ball" );
-        this->x = x;
-        this->y = y;
-        this->w = r;
-        this->h = r;
-        this->dx =  1;
-        this->dy = -1;
-    }    
+    Ball(int x, int y, int r);
 };
 
 class Paddle: public X{
  public:
-    Paddle(int x, int y){ 
-        this->setName( (char*)"Paddle" );
-        this->x = x;
-        this->y = y;
-        this->w = 40;
-        this->h = 6;
-    }
+    Paddle(int x, int y);
 };
 
 #endif
