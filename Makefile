@@ -25,8 +25,8 @@ libgame.so: game.cpp game.h
 cbreakout: $(OBJECTS) libgame.so
 	$(CC) $(CPPFLAGS) $(OBJECTS) $(LDLIBS) -o cbreakout
 
-main.o: main.cpp window.h reloader.h
-window.o: window.cpp window.h game.h 
+main.o: main.cpp window.h
+window.o: window.cpp window.h game.h reloader.h
 reloader.o: reloader.cpp reloader.h game.h
 game.o: game.cpp game.h
 

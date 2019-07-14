@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <GLFW/glfw3.h>
+#include <GL/glut.h>
 
 #include "window.h"
 #include "game.h"
@@ -77,4 +79,16 @@ void window_loop(GLFWwindow *window) {
 void window_cleanup(GLFWwindow *window) {
    glfwDestroyWindow(window);
    glfwTerminate();   
+}
+
+void window_start(int argc, char **argv){ 
+   reloader_init();
+
+   glutInit(&argc,argv);   
+
+   GLFWwindow* window = window_setup();
+   window_loop( window );
+   window_cleanup( window );   
+
+   reloader_cleanup();
 }
