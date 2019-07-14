@@ -7,7 +7,7 @@ CPPFLAGS += -O1 -pedantic -g -Wall -Wextra -Werror \
      -I/usr/local/include \
      -fPIE -fPIC
 
-CPPFLAGS += -fsanitize=thread -fsanitize=undefined -fsanitize=vptr
+##CPPFLAGS += -fsanitize=thread -fsanitize=undefined -fsanitize=vptr
 
 LDLIBS += -lpthread -lstdc++ -lubsan -lglut -lGL -lglfw -ldl -pie 
 OBJECTS=main.o window.o reloader.o
