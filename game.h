@@ -1,14 +1,14 @@
 #ifndef __CBREAKOUT_GAME_H
 #define __CBREAKOUT_GAME_H
 
-#include "common.h"
 #include <stdatomic.h>
 
 struct Game;
+struct GameState;
+
 typedef void (*T_GAME_INIT)(Game *);
 typedef void (*T_GAME_RENDER)(Game *);
 typedef void (*T_GAME_ON_KEY)(Game *, int, int, int, int);
-
 struct GameHandlers {
    T_GAME_INIT   pinit = NULL;
    T_GAME_ON_KEY ponkey = NULL;
@@ -16,12 +16,7 @@ struct GameHandlers {
 };
 
 struct Game {
- public:
-   int frames;
-   float t;
-   Ball *ball;
-   Paddle *paddle;
-   Brick *bricks;
+   GameState *state;
    atomic_intptr_t handlers = ATOMIC_VAR_INIT(0);
 };
 

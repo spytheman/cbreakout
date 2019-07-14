@@ -7,29 +7,40 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include "common.h"
 
 #define ICLAMP(x, xmin, xmax )  x = ( x < xmin ) ? xmin : ( ( x > xmax ) ? xmax :  x )
 
+struct GameState {
+ public:
+   int frames;
+   float t;
+   Ball *ball;
+   Paddle *paddle;
+   Brick *bricks;
+};
+
 void game_init(Game *g){
    srand(time(NULL));
-   g->ball = new Ball(-40, 100, 1);
-   g->paddle = new Paddle(0, -100);
-   g->bricks = new Brick[60];
+   g->state = new GameState();
+   g->state->ball = new Ball(-40, 100, 1);
+   g->state->paddle = new Paddle(0, -100);
+   g->state->bricks = new Brick[60];
    //atomic_store( &g->handlers, 0 );
 }
 
 void game_printstate(Game *g){
-   printf("zFrames: %5d t:%8.3f | g: %p", g->frames, g->t, (void *)g);
-   g->ball->print();
-   g->paddle->print();
-   g->bricks[0].print();
-   g->bricks[1].print();
+   printf("Frames: %5d t:%8.3f | g: %p", g->state->frames, g->state->t, (void *)g);
+   g->state->ball->print();
+   g->state->paddle->print();
+   g->state->bricks[0].print();
+   g->state->bricks[1].print();
    printf("\n");
 }
 
 void showPaddle(Game *g){
    glLoadIdentity();
-   glTranslatef( g->paddle->x / 112.0, 0.11 + g->paddle->y / 100.0, 0.0);
+   glTranslatef( g->state->paddle->x / 112.0, 0.11 + g->state->paddle->y / 100.0, 0.0);
    glRotatef( 3.14f, 1.f, 1.f, 0.0f);
    glScalef( 0.8, 0.15, 1.0 );
    glColor3f(0.5, 0.0, 0.1 );
@@ -38,8 +49,8 @@ void showPaddle(Game *g){
 
 void showBall(Game *g){
    glLoadIdentity();
-   glTranslatef( g->ball->x / 112.0, 0.11 + g->ball->y / 100.0, 0);
-   glRotatef( 235.14f * g->t, 5.5f, 5.f, 8.0f);
+   glTranslatef( g->state->ball->x / 112.0, 0.11 + g->state->ball->y / 100.0, 0);
+   glRotatef( 235.14f * g->state->t, 5.5f, 5.f, 8.0f);
    glScalef( 0.2, 0.2, 0.2 );
    glColor3f(0.1, 0.2, 0.9 );
    glutWireSphere(1.0, 15, 15);
@@ -49,7 +60,7 @@ void showBricks(Game *g){
    glLoadIdentity();
    glTranslatef( 0.0, 0.0, 0.0);
    glRotatef( 2.f, 0.f, 0.f, 1.5f);
-   glRotatef( 50.f * g->t, 5.f, 4.f, 3.0f);
+   glRotatef( 50.f * g->state->t, 5.f, 4.f, 3.0f);
    glScalef( 0.2, 0.1, 0.1 );
    glColor3f(0.5, 0.5, 0.5 );
    glutWireCube(1.0);
@@ -63,31 +74,31 @@ void showBackground(Game *g){
 }
 
 void game_update(Game *g){
-    //printf("game_update y: %d g:%p\n", g->ball->y, (void*)g);
+    //printf("game_update y: %d g:%p\n", g->state->ball->y, (void*)g);
     {
-        g->ball->x += g->ball->dx;
-        g->ball->y += g->ball->dy;
-        if( g->ball->dy < 0 && g->ball->y < -90 ) g->ball->dy *= -1;
-        if( g->ball->dy > 0 && g->ball->y >  72 ) g->ball->dy *= -1;
-        if( g->ball->dx < 0 && g->ball->x < -128 ) g->ball->dx *= -1;
-        if( g->ball->dx > 0 && g->ball->x >  128 ) g->ball->dx *= -1;
-        ICLAMP( g->ball->x, -130, 130 );
-        ICLAMP( g->ball->y, -90, 72 );
+        g->state->ball->x += g->state->ball->dx;
+        g->state->ball->y += g->state->ball->dy;
+        if( g->state->ball->dy < 0 && g->state->ball->y < -90 ) g->state->ball->dy *= -1;
+        if( g->state->ball->dy > 0 && g->state->ball->y >  72 ) g->state->ball->dy *= -1;
+        if( g->state->ball->dx < 0 && g->state->ball->x < -128 ) g->state->ball->dx *= -1;
+        if( g->state->ball->dx > 0 && g->state->ball->x >  128 ) g->state->ball->dx *= -1;
+        ICLAMP( g->state->ball->x, -130, 130 );
+        ICLAMP( g->state->ball->y, -90, 72 );
     }
     {
-        g->paddle->x += g->paddle->dx;
-        g->paddle->y += g->paddle->dy;
-        ICLAMP( g->paddle->x, -120, 120 );
-        ICLAMP( g->paddle->y, -120, 120 );
+        g->state->paddle->x += g->state->paddle->dx;
+        g->state->paddle->y += g->state->paddle->dy;
+        ICLAMP( g->state->paddle->x, -120, 120 );
+        ICLAMP( g->state->paddle->y, -120, 120 );
     }
 }
 
 void game_render(Game *g){
-   g->t = (float) glfwGetTime();
-   g->frames++;
+   g->state->t = (float) glfwGetTime();
+   g->state->frames++;
    ///////////////////////////////////////////////////////
    game_update(g);
-   if( g->frames % 60 == 0 ) game_printstate(g);
+   if( g->state->frames % 60 == 0 ) game_printstate(g);
    showBackground(g);
    showPaddle(g);
    showBall(g);
@@ -99,9 +110,9 @@ void game_onkey(Game *g, int key, int scancode, int action, int mods){
 
    if( key == GLFW_KEY_R )  game_init(g);
 
-   if( key == GLFW_KEY_RIGHT ) g->paddle->dx =  3;
-   if( key == GLFW_KEY_LEFT )  g->paddle->dx = -3;
-   if( key == GLFW_KEY_UP )  g->paddle->dx = 0;
+   if( key == GLFW_KEY_RIGHT ) g->state->paddle->dx =  3;
+   if( key == GLFW_KEY_LEFT )  g->state->paddle->dx = -3;
+   if( key == GLFW_KEY_UP )  g->state->paddle->dx = 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -156,4 +167,3 @@ Paddle::Paddle(int x, int y){
     this->w = 40;
     this->h = 6;
 }
-
