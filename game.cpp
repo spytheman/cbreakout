@@ -30,11 +30,10 @@ void game_init(Game *g){
 }
 
 void game_printstate(Game *g){
-   printf("Frames: %5d t:%8.3f | g: %p", g->state->frames, g->state->t, (void *)g);
+   printf("Frames: %5d t:%8.3f | ", g->state->frames, g->state->t);
    g->state->ball->print();
    g->state->paddle->print();
    g->state->bricks[0].print();
-   g->state->bricks[1].print();
    printf("\n");
 }
 
@@ -67,14 +66,10 @@ void showBricks(Game *g){
 }
 
 void showBackground(Game *g){
-    //TODO
-    if(0){
-        printf("g: %p\n", (void*)g);
-    }
+    if(0)printf("g: %p\n", (void*)g); //TODO
 }
 
 void game_update(Game *g){
-    //printf("game_update y: %d g:%p\n", g->state->ball->y, (void*)g);
     {
         g->state->ball->x += g->state->ball->dx;
         g->state->ball->y += g->state->ball->dy;
@@ -108,7 +103,7 @@ void game_render(Game *g){
 void game_onkey(Game *g, int key, int scancode, int action, int mods){
    printf("game_onkey game: %p | key:%d scancode:%d action:%d mods:%d\n", (void*)g, key, scancode, action, mods);
 
-   if( key == GLFW_KEY_R )  game_init(g);
+   if( key == GLFW_KEY_R && action == GLFW_PRESS)  game_init(g);
 
    if( key == GLFW_KEY_RIGHT ) g->state->paddle->dx =  3;
    if( key == GLFW_KEY_LEFT )  g->state->paddle->dx = -3;
@@ -128,11 +123,11 @@ X::X(){
 }
 
 void X::setName(char *s){
-    this->name=s;
+   this->name=s;
 }
 
 void X::print(){
-    printf("%6s: xy %3d, %3d ; wh %3d, %3d |", this->name, this->x, this->y, this->w, this->h);
+    printf("%5s:%4d,%4d %4d,%4d |", this->name, this->x, this->y, this->w, this->h);
 }
 
 Brick::Brick(){
@@ -159,11 +154,13 @@ Ball::Ball(int x, int y, int r){
     this->h = r;
     this->dx =  1;
     this->dy = -1;
+    printf("New %s created ... %p\n", this->name, (void *)this);
 }
-Paddle::Paddle(int x, int y){ 
-    this->setName( strdup("Paddle") );
+Paddle::Paddle(int x, int y){    
+    this->setName( strdup("Pad") );
     this->x = x;
     this->y = y;
     this->w = 40;
     this->h = 6;
+    printf("New %s created ... %p\n", this->name, (void *)this);
 }
