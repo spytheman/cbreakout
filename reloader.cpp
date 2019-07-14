@@ -15,22 +15,22 @@ static void *_libgame = NULL;
 static atomic_int _shouldReload = ATOMIC_VAR_INIT(0);
 void sighandler(int);
 void sighandler(int signum) {
-   printf("Caught signal %d...\n", signum);
+   printf("Caught signal %d... Shared library should reload.\n", signum);
    atomic_store( &_shouldReload, 1);
 }
 
 void *_reloader_thread_proc(void *x){
-    printf("_reloader_thread_proc: start, x: %p\n", x);
+    if(0)printf("_reloader_thread_proc: start, x: %p\n", x);
     while(true){
         if( 2 == _shouldReload ) break;
         if( 1 == _shouldReload ){
-            printf("_reloader_thread_proc: _shouldReload=%d\n", _shouldReload);
+            //printf("_reloader_thread_proc: _shouldReload=%d\n", _shouldReload);
             atomic_store( &_shouldReload, 0);
             libgame_reload();
         }
-        usleep(10*200*1000);
+        usleep(100000);
     }
-    printf("_reloader_thread_proc: returning ...\n");
+    //printf("_reloader_thread_proc: returning ...\n");
     return NULL;
 }
 
@@ -44,7 +44,7 @@ void reloader_cleanup(){
     int jres;
     atomic_store( &_shouldReload, 2);
     jres = pthread_join(_reloader_thread, &result);
-    printf("reloader_cleanup pthread_join jres: %d result: %p\n", jres, result);
+    //printf("reloader_cleanup pthread_join jres: %d result: %p\n", jres, result);
 }
 ////////////////////////////////////////////////////////////////////////////
 
@@ -57,7 +57,7 @@ int cmdrun(const char *command){
 void libgame_load(){
    printf("libgame_load\n");
    char olibfilename[] = "./libgame.so";
-   cmdrun("make libgame.so");
+   //cmdrun("make libgame.so");
    printf("dlopening %s...\n", olibfilename);
    _libgame = dlopen( olibfilename , RTLD_NOW );
    printf("  >>>  _libgame=%p\n", _libgame );
