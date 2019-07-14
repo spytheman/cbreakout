@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "common.h"
 #include "window.h"
 #include "game.h"
 #include "reloader.h"

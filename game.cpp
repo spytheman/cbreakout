@@ -1,4 +1,3 @@
-#include "game.h"
 #include <GLFW/glfw3.h>
 #include <GL/glut.h>
 #include <unistd.h>
@@ -7,17 +6,48 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include "common.h"
+#include "game.h"
+
+/////////////////////////////////////////////////////////////////////////////////////
+class X {
+ public:
+    int x,y; // center of the object
+    int w,h; // half width and half height - distances to the edges
+    int dx;
+    int dy;
+    char *name;
+    X();
+    void setName(char *s);
+    void print();
+};
+
+class Brick: public X { 
+ public: 
+    Brick();
+    Brick(int x, int y);
+};
+
+class Ball: public X{
+ public:
+    Ball(int x, int y, int r);
+};
+
+class Paddle: public X{
+ public:
+    Paddle(int x, int y);
+};
+/////////////////////////////////////////////////////////////////////////////////////
 
 #define ICLAMP(x, xmin, xmax )  x = ( x < xmin ) ? xmin : ( ( x > xmax ) ? xmax :  x )
 
 struct GameState {
  public:
-   int frames;
-   float t;
-   Ball *ball;
-   Paddle *paddle;
-   Brick *bricks;
+   int frames = 0;
+   int oldframes = 0;
+   float t = 0.0f;
+   Ball *ball = NULL;
+   Paddle *paddle = NULL;
+   Brick *bricks = NULL;
 };
 
 void game_init(Game *g){
@@ -29,8 +59,11 @@ void game_init(Game *g){
    //atomic_store( &g->handlers, 0 );
 }
 
+/// zzz
 void game_printstate(Game *g){
-   printf("Frames: %5d t:%8.3f | ", g->state->frames, g->state->t);
+   int fps = g->state->frames - g->state->oldframes;
+   g->state->oldframes = g->state->frames;
+   printf("f: %5d fps: %2d t:%8.3f | ", g->state->frames, fps, g->state->t);
    g->state->ball->print();
    g->state->paddle->print();
    g->state->bricks[0].print();

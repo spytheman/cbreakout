@@ -28,5 +28,4 @@ extern "C" void game_init(Game *g);
 extern "C" void game_onkey(Game *g, int key, int scancode, int action, int mods);
 extern "C" void game_render(Game *g);
 
-
 #endif
