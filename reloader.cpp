@@ -10,6 +10,7 @@
 #include "game.h"
 
 static void *_libgame = NULL;
+Game game;
 
 ////////////////////////////////////////////////////////////////////////////
 static atomic_int _shouldReload = ATOMIC_VAR_INIT(0);
@@ -38,8 +39,12 @@ static pthread_t _reloader_thread;
 void reloader_init(){
    signal(SIGUSR1, sighandler);
    pthread_create(&_reloader_thread, NULL, _reloader_thread_proc, NULL);
+
+   libgame_load();
+   reinterpret_cast<GameHandlers *>( game.handlers )->pinit( &game );   
 }
 void reloader_cleanup(){
+    libgame_close();
     void *result;
     int jres;
     atomic_store( &_shouldReload, 2);
